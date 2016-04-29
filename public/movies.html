@@ -1,0 +1,32 @@
+<rzslider rz-slider-model="vm.movieQuery['vote_average.gte']"
+          rz-slider-high="vm.movieQuery['vote_average.lte']"
+          rz-slider-options='vm.voteAverageOptions'></rzslider>
+<rzslider rz-slider-model="vm.movieQuery['vote_count.gte']"
+          rz-slider-high="vm.movieQuery['vote_count.lte']"
+          rz-slider-options='vm.movieVoteCountOptions'></rzslider>
+<rzslider rz-slider-model="vm.movieQuery['release_date.gte']"
+          rz-slider-high="vm.releaseDateLTE"
+          rz-slider-options='vm.releaseDateOptions'></rzslider>
+
+<div genres-directive></div>
+
+<h3>{{vm.totalResults | number}} movies found</h3>
+
+<div class='row'>
+  <div class='col s12 l6' ng-repeat='result in vm.results'>
+    <div class='card'>
+
+        <div class='card-image'>
+          <img class='responsive-img' ng-src='https://image.tmdb.org/t/p/w500/{{result.backdrop_path}}'>
+        </div>
+
+        <div class='card-content'>
+          <h5><b>{{result.title}}</b></h5>
+          <h6><small>{{vm.getYear(result.release_date)}}</small></h6>
+          <h5>{{result.vote_average | number: 2}} <i class='tiny material-icons'>stars</i></h5>
+          <h6>{{result.overview | limitTo: 100}}{{result.overview.length > 20 ? '...' : ''}}</h6>
+        </div>
+
+    </div>
+  </div>
+</div>

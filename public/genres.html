@@ -1,0 +1,6 @@
+<div class='row'>
+  <p class='col s4 l3' ng-repeat='(key, value) in vm.genres'>
+    <input type='checkbox' id='{{key}}' class='filled-in' ng-model='vm.genres[key].selected' ng-click='vm.resetCountdown()'>
+    <label for='{{key}}'>{{value.name}}</label>
+  </p>
+</div>
