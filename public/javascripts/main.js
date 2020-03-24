@@ -17,7 +17,9 @@
     var RESET_TIME_IN_MS = 200;
     var CURRENT_YEAR = new Date().getFullYear();
     vm.releaseDateLTE = CURRENT_YEAR + 1;
+    vm.releaseDateGTE = CURRENT_YEAR - 15;
     vm.firstAirDateLTE = CURRENT_YEAR + 1;
+    vm.firstAirDateGTE = CURRENT_YEAR - 20;
     vm.category = 'movies';
 
     vm.movieQuery = {
@@ -25,7 +27,7 @@
       'vote_average.lte': 10.0,
       'vote_count.gte': 1000,
       'vote_count.lte': 10000,
-      'release_date.gte': CURRENT_YEAR - 15,
+      'release_date.gte': vm.releaseDateGTE,
       'release_date.lte': vm.releaseDateLTE,
       'with_genres': ''
     };
@@ -35,7 +37,7 @@
       'vote_average.lte': 10.0,
       'vote_count.gte': 40,
       'vote_count.lte': 2000,
-      'first_air_date.gte': CURRENT_YEAR - 20,
+      'first_air_date.gte': vm.firstAirDateGTE,
       'first_air_date.lte': vm.firstAirDateLTE,
       'with_genres': ''
     };
@@ -76,6 +78,8 @@
       var genreIds = _.map(selectedGenres, 'id').join('|');
       vm.movieQuery['with_genres'] = genreIds;
       vm.movieQuery['release_date.lte'] = vm.releaseDateLTE + 1;
+      vm.movieQuery['release_date.lte'] = `${vm.releaseDateLTE}-01-01`;
+      vm.movieQuery['release_date.gte'] = `${vm.releaseDateGTE}-01-01`;
       var query = $httpParamSerializer(vm.movieQuery);
       $http.get('/discover-movies?' + query).success(function(response) {
         console.log(response);
@@ -94,6 +98,8 @@
       var genreIds = _.map(selectedGenres, 'id').join('|');
       vm.tvShowQuery['with_genres'] = genreIds;
       vm.tvShowQuery['first_air_date.lte'] = vm.firstAirDateLTE + 1;
+      vm.tvShowQuery['first_air_date.lte'] = `${vm.firstAirDateLTE}-01-01`;
+      vm.tvShowQuery['first_air_date.gte'] = `${vm.firstAirDateGTE}-01-01`;
       var query = $httpParamSerializer(vm.tvShowQuery);
       $http.get('/discover-tv-shows?' + query).success(function(response) {
         console.log(response);
